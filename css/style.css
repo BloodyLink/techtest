@@ -1,0 +1,19 @@
+body{
+    background-color: #ffffff;
+    color: #000000;
+}
+
+.productos{
+    padding: 5em;
+}
+
+#btn-close-modal {
+    width:100%;
+    text-align: center;
+    cursor:pointer;
+    color:#fff;
+}
+
+.ingresoProducto{
+    padding: 3em;
+}
