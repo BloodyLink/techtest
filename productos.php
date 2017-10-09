@@ -49,7 +49,8 @@
                     <option value="">Seleccione tipo de producto</option>
                 </select>
                 Resultados por pagina:
-                <input class="form-control" type="number" name="resXPag" />
+                <input class="form-control" type="number" name="resXPag" id="resXPag"/>
+                <input hidden=hidden name="offset" id="offset" value="0"/>
                 <input hidden="hidden" value="buscar" name="action"/>
                 <br>
                 <input type="button" class="btn btn-default" id="btnBusquedaProd" value="Buscar"/>

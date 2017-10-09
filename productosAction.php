@@ -18,7 +18,12 @@ if(isset($_GET["tipo"]))
 if(isset($_GET["resXPag"]))
     $resultadosPorPagina = $_GET["resXPag"];
 
+if(isset($_GET["offset"]))
+    $offset = $_GET["offset"];
+
 require_once('dao\ProductosDao.php');
+
+
 
 try{
 
@@ -39,7 +44,12 @@ try{
         if($action == "buscar"){
             $cantidadProductos = $productosDao->getCantidadProductos($nombre, $descripcion, $tipo, $marca);
             $paginas = ceil($cantidadProductos / $resultadosPorPagina);
-            $productos = $productosDao = getProductos($nombre, $descripcion, $tipo, $marca, $offset, $limit);
+
+            if($resultadosPorPagina <= 0)
+                $resultadosPorPagina = null;
+            
+            $productos = $productosDao->getProductos($nombre, $descripcion, $tipo, $marca, $offset, $resultadosPorPagina);
+            print_r($productos);
         }
 
         if($action == "Marcas"){

@@ -2,6 +2,9 @@ $(document).ready(function(){
     getDatosCombobox("Marcas");
     getDatosCombobox("Tipos");
 
+    
+    
+
     $("#modalAddProducto").animatedModal({
         color: '#CCCCCC'
     });
