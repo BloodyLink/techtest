@@ -53,11 +53,15 @@ class ProductosDao extends aleEagleDAO{
             if($marca != null || $marca != "")
                 $sql .= " AND marca_idmarca = $marca";
 
-            if($limit != null || $limit != "")
+            if($limit != null || $limit != ""){
                 $sql .= " LIMIT $limit";
 
-            if($offset != null || $offset != "")
-                $sql .= " OFFSET $offset";
+                if($offset != null || $offset != "")
+                    $sql .= " OFFSET $offset";
+            }
+                
+
+            
             
             $q = $pdo->query($sql);
     
@@ -120,6 +124,35 @@ class ProductosDao extends aleEagleDAO{
         }
 
         
+    }
+
+    public function insertProducto ($nombre, $descripcion, $tipo, $marca){
+
+        try{
+            if($nombre == null || $nombre == "")
+                throw new Exception("Nombre no ingresado.");
+
+            if($descripcion == null || $descripcion == "")
+                throw new Exception("Descripcion no ingresadA.");
+
+            if($tipo == null || $tipo == "")
+                throw new Exception("Tipo no ingresado.");
+
+            if($marca == null || $marca == "")
+                throw new Exception("marca no ingresada.");
+
+            $pdo = $this->getPDO();    
+
+            $sql = "INSERT INTO producto(nombre, descripcion, tipo_idtipo, marca_idmarca)
+                    VALUES ('$nombre', '$descripcion', $tipo, $marca)";
+
+            if($pdo->query($sql))
+                echo "Producto guardado correctamente.";
+
+        } catch (Exception $e){
+            echo "Hubo un problema al insertar producto: " . $e->getMessage();
+        }
+
     }
 
 }

@@ -41,11 +41,11 @@
                 Descripcion: 
                 <input type="text" class="form-control" name="descripcion" placeholder="Escribe la descripcion del producto" />
                 Marca:
-                <select class="form-control" name="marca" id="slMarcas">
+                <select class="form-control slMarcas" name="marca">
                     <option value="">Seleccione marca de producto</option>
                 </select>
                 Tipo:
-                <select class="form-control" name="tipo" id="slTipos">
+                <select class="form-control slTipos" name="tipo">
                     <option value="">Seleccione tipo de producto</option>
                 </select>
                 Resultados por pagina:
@@ -61,20 +61,21 @@
         <div class="col-sm-3 busqueda">
         <a id="modalAddProducto" href="#animatedModal">Agregar producto</a><br>
         <span id="msjeAjax"></span>
-        <span id="responseAjax"></span>
+        <span class="list-group" id="responseAjax"></span>
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-sm-6 col-sm-offset-3 list-group">
-            <a href="#" class="list-group-item">First item</a>
-            <a href="#" class="list-group-item">Second item</a>
-            <a href="#" class="list-group-item">Third item</a>
-        </div>
-    </div>
+    
 
   </div>
     
+    <div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-6 col-sm-offset-3 list-group" id="listaProductos">
+        </div>
+    </div>
+    </div>
+
   <div id="animatedModal">
             
             <div  id="btn-close-modal" class="close-animatedModal"> 
@@ -84,19 +85,19 @@
             <div class="modal-content">
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-sm-6 col-sm-offset-3 ingresoProducto">
+                        <div class="col-sm-6 col-sm-offset-3 col-md-6 ingresoProducto">
                             <h1>Ingreso de producto</h1>
                             <form class="form-group" id="formIngresoProd">
                                 Nombre: 
                                 <input type="text" class="form-control" name="nombre" placeholder="Ingresa nombre del producto" />
                                 Marca: 
-                                <select name="tipo" id="slMarca" class="form-control">
+                                <select class="form-control slMarcas" name="marca">
                                     <option value="">Selecciona marca:</option>
                                 </select>
                                 Descripcion: 
                                 <input type="text" class="form-control" name="descripcion" placeholder="Ingresa descripcion del producto"/>
                                 Tipo: 
-                                <select name="tipo" id="slTipo" class="form-control">
+                                <select class="form-control slTipos" name="tipo">
                                     <option value="">Selecciona tipo:</option>
                                 </select>
                                 <input hidden="hidden" name="action" value="guardar"/>

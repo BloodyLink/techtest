@@ -31,25 +31,28 @@ try{
 
     if(isset($action)){
         if($action == "guardar") {
-            // echo "guardando... ok!";
-
-            
-            
-            // foreach($productos as $p){
-            //     echo $p->nombre . "<br>";
-            // }
+            $productosDao->insertProducto($nombre, $descripcion, $tipo, $marca);
 
         }
 
         if($action == "buscar"){
             $cantidadProductos = $productosDao->getCantidadProductos($nombre, $descripcion, $tipo, $marca);
-            $paginas = ceil($cantidadProductos / $resultadosPorPagina);
 
-            if($resultadosPorPagina <= 0)
+            if($resultadosPorPagina <= 0){              
                 $resultadosPorPagina = null;
+            }else{
+                $paginas = ceil($cantidadProductos / $resultadosPorPagina);
+            }
+                
+
             
             $productos = $productosDao->getProductos($nombre, $descripcion, $tipo, $marca, $offset, $resultadosPorPagina);
-            print_r($productos);
+            
+            // return $productos;
+
+            foreach($productos as $p){
+                echo '<a href="detalleProducto.php?id=' . $p->idproducto . '" class="list-group-item">' . $p->nombre . '</a>';
+            }
         }
 
         if($action == "Marcas"){
