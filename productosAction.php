@@ -21,6 +21,9 @@ if(isset($_GET["resXPag"]))
 if(isset($_GET["offset"]))
     $offset = $_GET["offset"];
 
+if(isset($_GET["pagina"]))
+    $pagina = $_GET["pagina"];
+
 require_once('dao\ProductosDao.php');
 require_once('dao\UsuariosDao.php');
 
@@ -49,19 +52,41 @@ try{
             $busquedasDisponibles = $usuariosDao->getBusquedas($_SESSION["id"])->busquedas;
 
             if($busquedasDisponibles > 0){
+                
+
                 if($resultadosPorPagina <= 0){              
                     $resultadosPorPagina = null;
+                    $productos = $productosDao->getProductos($nombre, $descripcion, $tipo, $marca, $offset, $resultadosPorPagina);
+                    foreach($productos as $p){
+                        echo '<a href="detalleProducto.php?id=' . $p->idproducto . '" class="list-group-item">' . $p->nombre . '</a>';
+                    }
+                
                 }else{
                     $paginas = ceil($cantidadProductos / $resultadosPorPagina);
-                }
-    
-                $productos = $productosDao->getProductos($nombre, $descripcion, $tipo, $marca, $offset, $resultadosPorPagina);
-                
-    
-                foreach($productos as $p){
-                    echo '<a href="detalleProducto.php?id=' . $p->idproducto . '" class="list-group-item">' . $p->nombre . '</a>';
+                    $offset = $pagina * $resultadosPorPagina;
+                    $productos = $productosDao->getProductos($nombre, $descripcion, $tipo, $marca, $offset, $resultadosPorPagina);
+                    
+                    foreach($productos as $p){
+                        echo '<a href="detalleProducto.php?id=' . $p->idproducto . '" class="list-group-item">' . $p->nombre . '</a>';
+                    }
+
+
+                    echo "<br>";
+                    
+                    echo "<form id='formPagina'>";
+                    echo "<input hidden=hidden name='action' value='buscar' />";
+                    echo "<select name='pagina' id='pagina'>";
+                    for($i = 1; $i <= $paginas; $i++){
+                        echo "<option value='$i'>Pag $i</option>";
+                    }
+
+                    echo "</select>";
+                    
                 }
 
+               
+                
+                echo "</form>";
                 $usuariosDao->updateBusquedas($_SESSION["id"]);
             }else{
                 echo "No tienes consultas disponibles.";

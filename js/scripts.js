@@ -7,7 +7,7 @@ $(document).ready(function(){
     });
 
     $("#btnBusquedaProd").on('click', function(){
-        getProductos($( "#formBusquedaProd" ).serialize());
+        getProductos($( "#formBusquedaProd" ).serialize(), 0);
     }) ;
 
     $("#btnIngresoProd").on('click', function(){
@@ -36,6 +36,12 @@ $(document).ready(function(){
             eliminarProducto($( "#deleteProductoForm" ).serialize());
         }
     });
+
+    $('#pagina').on('change', function(){
+        console.log($( "#formBusquedaProd" ).serialize() + $('#pagina').val());
+        getProductos($( "#formBusquedaProd" ).serialize(), $('#pagina').val());
+    });
+
 });
 
 function getDatosCombobox (str) {
@@ -100,7 +106,7 @@ function eliminarProducto (str) {
     xhttp.send();
 }
 
-function getProductos (str) {
+function getProductos (str, pagina) {
     $('#listaProductos').empty();
     $('#msjeAjax').html("<img src='img/loading.gif' width='50px' height='50px'/>");
     $('#listaProductos').html("<img src='img/loading.gif' width='50px' height='50px'/>");
@@ -114,7 +120,7 @@ function getProductos (str) {
             
         }
     };
-    xhttp.open("GET", "productosAction.php?" + str, true);
+    xhttp.open("GET", "productosAction.php?" + str + "&pagina=" + pagina, true);
     xhttp.send();
 }
 
