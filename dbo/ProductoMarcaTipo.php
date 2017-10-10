@@ -6,8 +6,9 @@ class Producto {
         var $nombre;
         var $marca_idmarca;
         var $descripcion;
-        var $tipoIdtipo;
-        
+        var $tipo_idtipo;
+        var $marcaNombre;
+        var $tipoNombre;
         
         function getIdproducto() {
             return $this->idproducto;
@@ -17,7 +18,7 @@ class Producto {
             return $this->nombre;
         }
     
-        function getmarca_idmarca() {
+        function getMarca_idmarca() {
             return $this->marca_idmarca;
         }
     
@@ -25,8 +26,16 @@ class Producto {
             return $this->descripcion;
         }
     
-        function getTipoIdtipo() {
-            return $this->tipoIdtipo;
+        function getTipo_idtipo() {
+            return $this->tipo_idtipo;
+        }
+    
+        function getMarcaNombre() {
+            return $this->marcaNombre;
+        }
+    
+        function getTipoNombre() {
+            return $this->tipoNombre;
         }
     
         function setIdproducto($idproducto) {
@@ -37,7 +46,7 @@ class Producto {
             $this->nombre = $nombre;
         }
     
-        function setmarca_idmarca($marca_idmarca) {
+        function setMarca_idmarca($marca_idmarca) {
             $this->marca_idmarca = $marca_idmarca;
         }
     
@@ -45,11 +54,17 @@ class Producto {
             $this->descripcion = $descripcion;
         }
     
-        function setTipoIdtipo($tipoIdtipo) {
-            $this->tipoIdtipo = $tipoIdtipo;
+        function setTipo_idtipo($tipo_idtipo) {
+            $this->tipo_idtipo = $tipo_idtipo;
         }
     
+        function setMarcaNombre($marcaNombre) {
+            $this->marcaNombre = $marcaNombre;
+        }
     
+        function setTipoNombre($tipoNombre) {
+            $this->tipoNombre = $tipoNombre;
+        }
     
     }
     

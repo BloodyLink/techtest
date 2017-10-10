@@ -1,5 +1,7 @@
 <?php
-// require_once('conexion/.php');
+
+session_start();
+
 ?>
 <!doctype html>
     <head>
@@ -20,11 +22,24 @@
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li><a href="index.php">Home</a></li>
-          <li class="active"><a href="productos.php">Productos</a></li>
+          <?php if($_SESSION){ ?><li class="active"><a href="productos.php">Productos</a></li><?php } ?>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="registro.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <?php
+                if(!$_SESSION){
+            ?>
+
+            <li><a href="registro.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+            <?php
+                }else{
+     
+            ?>
+            <li><a href="cerrarSesion.php"><span class="glyphicon glyphicon-user"></span> Log out</a></li>
+            <?php
+                }
+            ?>
         </ul>
       </div>
     </div>
@@ -72,6 +87,7 @@
     <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3 list-group" id="listaProductos">
+        <h3>Productos</h3>
         </div>
     </div>
     </div>
@@ -112,9 +128,5 @@
 
 
     </body>
-    <script>
-        $("#modalAddProducto").animatedModal({
-            color: '#CCCCCC'
-        });
-    </script>
+
 </html>

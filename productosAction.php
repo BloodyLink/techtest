@@ -22,37 +22,51 @@ if(isset($_GET["offset"]))
     $offset = $_GET["offset"];
 
 require_once('dao\ProductosDao.php');
+require_once('dao\UsuariosDao.php');
 
-
+session_start();
 
 try{
 
     $productosDao = new ProductosDao();
+    $usuariosDao = new UsuariosDao();
 
     if(isset($action)){
         if($action == "guardar") {
             $productosDao->insertProducto($nombre, $descripcion, $tipo, $marca);
+        }
+        
+        if($action == "eliminar"){
+            $productosDao->eliminarProducto($id);
+        }
 
+        if($action == "editar"){
+            $productosDao->editProducto($id, $nombre, $descripcion);
         }
 
         if($action == "buscar"){
             $cantidadProductos = $productosDao->getCantidadProductos($nombre, $descripcion, $tipo, $marca);
+            $busquedasDisponibles = $usuariosDao->getBusquedas($_SESSION["id"])->busquedas;
 
-            if($resultadosPorPagina <= 0){              
-                $resultadosPorPagina = null;
-            }else{
-                $paginas = ceil($cantidadProductos / $resultadosPorPagina);
-            }
+            if($busquedasDisponibles > 0){
+                if($resultadosPorPagina <= 0){              
+                    $resultadosPorPagina = null;
+                }else{
+                    $paginas = ceil($cantidadProductos / $resultadosPorPagina);
+                }
+    
+                $productos = $productosDao->getProductos($nombre, $descripcion, $tipo, $marca, $offset, $resultadosPorPagina);
                 
+    
+                foreach($productos as $p){
+                    echo '<a href="detalleProducto.php?id=' . $p->idproducto . '" class="list-group-item">' . $p->nombre . '</a>';
+                }
 
-            
-            $productos = $productosDao->getProductos($nombre, $descripcion, $tipo, $marca, $offset, $resultadosPorPagina);
-            
-            // return $productos;
-
-            foreach($productos as $p){
-                echo '<a href="detalleProducto.php?id=' . $p->idproducto . '" class="list-group-item">' . $p->nombre . '</a>';
+                $usuariosDao->updateBusquedas($_SESSION["id"]);
+            }else{
+                echo "No tienes consultas disponibles.";
             }
+            
         }
 
         if($action == "Marcas"){
@@ -71,11 +85,6 @@ try{
             }
         }
 
-        // if($action == "mostrar") {
-        //     $productos = $productosDao->getProductos();
-        // }
-
-        // print_r($_GET);
     }
 
 }catch(Exception $e){

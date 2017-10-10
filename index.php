@@ -26,7 +26,9 @@
 // estructura de archivos ni directorios. 
 
 
-// require_once('conexion/conexion.php');
+
+session_start();
+
 ?>
 <!doctype html>
     <head>
@@ -47,11 +49,24 @@
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
           <li class="active"><a href="index.php">Home</a></li>
-          <li><a href="productos.php">Productos</a></li>
+          <?php if($_SESSION){ ?><li><a href="productos.php">Productos</a></li><?php } ?>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="registro.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
-          <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+            <?php
+                if(!$_SESSION){
+            ?>
+
+            <li><a href="registro.php"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
+            <li><a href="login.php"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+
+            <?php
+                }else{
+     
+            ?>
+            <li><a href="cerrarSesion.php"><span class="glyphicon glyphicon-user"></span> Log out</a></li>
+            <?php
+                }
+            ?>
         </ul>
       </div>
     </div>

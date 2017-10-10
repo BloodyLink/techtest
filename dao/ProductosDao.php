@@ -2,7 +2,7 @@
 
 require_once('conexion/AleEagleDAO.php');
 require_once('dbo/ProductoMarcaTipo.php');
-class ProductosDao extends aleEagleDAO{
+class ProductosDao extends AleEagleDAO{
 
     public function getCantidadProductos ($nombre = null, $descripcion = null, $tipo = null, $marca = null) {
         try{
@@ -34,6 +34,34 @@ class ProductosDao extends aleEagleDAO{
         }
     }
 
+    public function getProductoById($id){
+        try{
+            $pdo = $this->getPDO();
+
+            $sql = "SELECT 
+                    p.idproducto,
+                    p.nombre,
+                    p.descripcion,
+                    p.marca_idmarca,
+                    p.tipo_idtipo,
+                    m.nombre AS marcaNombre,
+                    t.nombre AS tipoNombre
+                    FROM producto p
+                    INNER JOIN marca m ON (m.idmarca = p.marca_idmarca)
+                    INNER JOIN tipo t ON (t.idtipo = p.tipo_idtipo)
+                    WHERE idproducto = $id";
+
+            $q = $pdo->query($sql);
+            
+            $res = $q->fetchAll(PDO::FETCH_CLASS, "Producto");
+            
+            return $res[0];
+
+        }catch (Exception $e) {
+            echo "Problemas al obtener producto" . $e->getMessage();
+        }
+    }
+
     public function getProductos($nombre = null, $descripcion = null, $tipo = null, $marca = null, $offset = null, $limit = null){
         try{
             $pdo = $this->getPDO();
@@ -61,8 +89,6 @@ class ProductosDao extends aleEagleDAO{
             }
                 
 
-            
-            
             $q = $pdo->query($sql);
     
             $res = $q->fetchAll(PDO::FETCH_CLASS, "Producto");
@@ -73,6 +99,37 @@ class ProductosDao extends aleEagleDAO{
         }
         
         
+    }
+
+    public function editProducto ($id, $nombre, $descripcion){
+        try{
+            $pdo = $this->getPDO();
+
+            $sql = "UPDATE producto
+                    SET nombre = '$nombre',
+                    descripcion = '$descripcion'
+                    WHERE idproducto = $id";
+        
+            if($pdo->query($sql))
+                echo "Elemento editado correctamente.";
+
+        } catch (Exception $e){
+            echo "Hubo un problema al editar producto" . $e->getMessage();
+        }
+    }
+
+    public function eliminarProducto($id){
+        try{
+            $pdo = $this->getPDO();
+
+            $sql = "DELETE FROM producto WHERE idproducto = $id;";
+        
+            if($pdo->query($sql))
+                echo "Elemento eliminado correctamente.";
+
+        } catch (Exception $e){
+            echo "Hubo un problema al eliminar producto" . $e->getMessage();
+        }
     }
 
     public function getMarcas($id = null, $nombre = null) {
